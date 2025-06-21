@@ -1,0 +1,37 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="product-detail">
+  <div class="product-gallery">
+    <img src="{{ product.image.url }}" alt="{{ product.title }}">
+  </div>
+
+  <div class="product-info">
+    <h1 class="product-title">{{ product.title }}</h1>
+    <p class="product-brand">
+      Бренд: <a href="{{ product.brand.get_absolute_url }}">{{ product.brand.title }}</a>
+    </p>
+    <p class="product-category">
+      Категория: <a href="{{ product.category.get_absolute_url }}">{{ product.category.title }}</a>
+    </p>
+    <p class="product-price">{{ product.price }} ₽</p>
+
+<form method="post" action="">
+  {% csrf_token %}
+  <div class="size-options">
+    {% for size, label in product.SIZE_CHOICES %}
+      <input type="radio" name="size" id="size-{{ size }}" value="{{ size }}" required>
+      <label for="size-{{ size }}">{{ label }}</label>
+    {% endfor %}
+  </div>
+  <button type="submit" class="btn-buy">Добавить в корзину</button>
+</form>
+
+    <div class="product-description">
+      <h2>Описание</h2>
+      <p>{{ product.description }}</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

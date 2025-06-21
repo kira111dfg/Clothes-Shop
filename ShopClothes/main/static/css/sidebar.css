@@ -1,0 +1,46 @@
+/* Общие стили для сайдбара */
+.sidebar {
+  width: 250px;
+  padding: 20px;
+  background-color: #fff;
+  color: #000;
+  font-family: 'Arial', sans-serif;
+  border-right: 1px solid #e0e0e0;
+}
+
+.sidebar h4 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-top: 25px;
+}
+
+.filter-section {
+  margin-bottom: 20px;
+}
+
+.filter-section label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.filter-section input[type="checkbox"] {
+  margin-right: 6px;
+}
+
+/* Цена */
+#price-slider {
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+#price-display {
+  font-size: 14px;
+  color: #111;
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+/* Цена: стилизация ползунка */

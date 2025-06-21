@@ -1,0 +1,121 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+
+<div class="sidebar">
+  <form method="get">
+
+    <div class="filter-section">
+      <h4>Бренд</h4>
+      {% for brand in brands %}
+        <label>
+          <input type="checkbox" name="brand" value="{{ brand.slug }}" {% if brand.slug in selected_brands %}checked{% endif %}>
+          {{ brand.title }}
+        </label>
+      {% endfor %}
+    </div>
+
+    <div class="filter-section">
+      <h4>Категории</h4>
+      {% for category in categories %}
+        <label>
+          <input type="checkbox" name="category" value="{{ category.slug }}" {% if category.slug in selected_categories %}checked{% endif %}>
+          {{ category.title }}
+        </label>
+      {% endfor %}
+    </div>
+
+    <div class="filter-section">
+      <h4>Размер</h4>
+      {% for code, label in sizes %}
+        <label>
+          <input type="checkbox" name="size" value="{{ code }}" {% if code in selected_sizes %}checked{% endif %}>
+          {{ label }}
+        </label>
+      {% endfor %}
+    </div>
+
+    <div class="filter-section">
+      <h4>Цена</h4>
+      <div id="price-slider"></div>
+      <input type="hidden" id="input-price-min" name="price_min" value="{{ price_min|default:'0' }}">
+      <input type="hidden" id="input-price-max" name="price_max" value="{{ price_max|default:max_price }}">
+      <div id="price-display">от {{ price_min|default:'0' }} до {{ price_max|default:max_price }} ₽</div>
+    </div>
+
+    <button type="submit" style="margin-top: 15px;">Показать</button>
+  </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/nouislider@15.7.0/dist/nouislider.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/wnumb@1.2.0/wNumb.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const priceSlider = document.getElementById('price-slider');
+    const inputMin = document.getElementById('input-price-min');
+    const inputMax = document.getElementById('input-price-max');
+    const priceDisplay = document.getElementById('price-display');
+
+    if (!priceSlider) return;
+
+    const startMin = parseInt(inputMin.value) || 0;
+    const startMax = parseInt(inputMax.value) || 100000;
+
+    noUiSlider.create(priceSlider, {
+      start: [startMin, startMax],
+      connect: true,
+      range: {
+        min: 0,
+        max: {{ max_price|default:"100000" }}
+      },
+      format: wNumb({
+        decimals: 0,
+        thousand: ' ',
+      }),
+      behaviour: 'tap-drag',
+    });
+
+    priceSlider.noUiSlider.on('update', function (values) {
+      const min = values[0];
+      const max = values[1];
+
+      inputMin.value = min;
+      inputMax.value = max;
+
+      priceDisplay.textContent = `от ${min} до ${max} ₽`;
+    });
+  });
+</script>
+<style>
+/* Чёрная тонкая линия слайдера */
+.noUi-target {
+  background: #000 !important;
+  height: 4px !important;
+  border-radius: 2px !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Активная часть слайдера */
+.noUi-connect {
+  background: #000 !important;
+}
+
+/* Ручки слайдера - поменьше */
+.noUi-handle {
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 50% !important;
+  background: #000 !important;
+  border: none !important;
+  box-shadow: none !important;
+  top: -4px !important;
+  cursor: pointer !important;
+  margin-right: 8px !important;
+}
+
+/* Убираем лишние палочки */
+.noUi-handle:before,
+.noUi-handle:after {
+  display: none !important;
+}
+</style>

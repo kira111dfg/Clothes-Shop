@@ -1,0 +1,164 @@
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 30px;
+  padding: 20px;
+}
+
+.product-card {
+  background-color: #fff;
+  text-align: center;
+  text-decoration: none;
+  border: 1px solid #eee;
+  transition: 0.3s ease;
+}
+
+.product-card:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-card img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.product-info {
+  padding: 10px;
+}
+
+.product-type {
+  color: #999;
+  font-size: 13px;
+  margin: 5px 0;
+}
+
+.product-name {
+  font-size: 16px;
+  margin: 5px 0;
+  color: #000;
+}
+
+.product-price {
+  font-weight: bold;
+  font-size: 15px;
+  color: #000;
+}
+
+
+.product-detail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  padding: 40px;
+  background-color: #fff;
+  color: #000;
+}
+
+.product-gallery {
+  flex: 1;
+  min-width: 300px;
+  max-width: 500px;
+}
+
+.product-gallery img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border: 1px solid #eee;
+}
+
+.product-info {
+  flex: 1;
+  min-width: 300px;
+}
+
+.product-title {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.product-brand,
+.product-category {
+  color: #888;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.product-price {
+  font-size: 22px;
+  font-weight: bold;
+  margin: 20px 0;
+}
+
+.btn-buy {
+  background-color: #000;
+  color: #fff;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-buy:hover {
+  background-color: #333;
+}
+
+.product-description {
+  margin-top: 30px;
+}
+
+.product-description h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+
+.size-options {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.size-options input[type="radio"] {
+  display: none;
+}
+
+.size-options label {
+  padding: 10px 16px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.size-options input[type="radio"]:checked + label {
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+.size-options label:hover {
+  border-color: #000;
+}
+
+
+.catalog-container {
+  display: flex;
+  gap: 30px;
+  padding: 30px;
+  align-items: flex-start;
+}
+
+.sidebar {
+  flex: 0 0 250px;
+}
+
+.product-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
