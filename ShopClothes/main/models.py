@@ -38,7 +38,7 @@ class Product(models.Model):
     brand=models.ForeignKey('Brand',on_delete=models.PROTECT)
 
     def get_absolute_url(self):
-        return reverse("product", kwargs={"slug": self.slug})
+        return reverse('product', args=[self.id])
     
     def save(self, *args, **kwargs):
         if not self.slug:

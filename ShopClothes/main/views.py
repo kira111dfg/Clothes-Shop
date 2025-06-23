@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import DetailView,ListView,CreateView,UpdateView,DeleteView
+
+from cart.forms import CartAddProductForm
 from .models import Product,Brand,Category
 from django.db.models import Max
 
@@ -82,3 +84,8 @@ class ProductDetail(DetailView):
     model=Product
     context_object_name='product'
     template_name='main/clothes_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cart_product_form'] = CartAddProductForm()
+        return context

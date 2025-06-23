@@ -17,16 +17,21 @@
     </p>
     <p class="product-price">{{ product.price }} ₽</p>
 
-<form method="post" action="">
+<form method="post" action="{% url 'cart:cart_add' product.id %}">
   {% csrf_token %}
+  
   <div class="size-options">
     {% for size, label in product.SIZE_CHOICES %}
       <input type="radio" name="size" id="size-{{ size }}" value="{{ size }}" required>
       <label for="size-{{ size }}">{{ label }}</label>
     {% endfor %}
   </div>
-  <button type="submit" class="btn-buy">Добавить в корзину</button>
+
+  {{ cart_product_form.quantity }}
+  <input type="hidden" name="update" value="False">
+  <button type="submit">Добавить в корзину 🛒</button>
 </form>
+
 
     <div class="product-description">
       <h2>Описание</h2>
