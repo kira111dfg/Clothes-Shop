@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-<h1>Your Shopping Cart</h1>
+<h1>Ваша корзина</h1>
 
 {% if cart %}
 <div class="cart-container">
@@ -22,10 +22,10 @@
                         </div>
                     </a>
                     <div class="product-details">
-                        <p>Unit Price: ${{ item.price }}</p>
-                        <p>Quantity: {{ item.quantity }}</p>
-                        <p>Total: ${{ item.total_price }}</p>
-                        <a href="{% url 'cart:cart_remove' product.id %}?size={{ item.size }}">Remove</a>
+                        <p>Цена товара: ${{ item.price }}</p>
+                        <p>Количество: {{ item.quantity }}</p>
+                        <p>Итого: ${{ item.total_price }}</p>
+                        <a href="{% url 'cart:cart_remove' product.id %}?size={{ item.size }}">Удалить</a>
 
                     </div>
                 </div>
@@ -34,13 +34,13 @@
     </div>
 
     <div class="cart-summary">
-        <h2>Total: ${{ cart.get_total_price }}</h2>
-        <a href="{% url 'products' %}" class="button light">Continue Shopping</a>
-        <a href="{% url "orders:order_create" %}" class="button checkout">Checkout</a>
+        <h2>Итого: ${{ cart.get_total_price }}</h2>
+        <a href="{% url 'products' %}" class="button light">Продолжить покупки</a>
+        <a href="{% url "orders:order_create" %}" class="button checkout">Заказать</a>
     </div>
 </div>
 {% else %}
-    <p>Your cart is empty.</p>
-    <a href="{% url 'products' %}" class="button">Go Shopping</a>
+    <p>Ваша корзина пуста</p>
+    <a href="{% url 'products' %}" class="button">Каталог</a>
 {% endif %}
 {% endblock %}

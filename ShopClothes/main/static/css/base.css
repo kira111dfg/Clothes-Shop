@@ -5,6 +5,8 @@
   padding: 20px;
 }
 
+
+
 .product-card {
   background-color: #fff;
   text-align: center;
@@ -161,4 +163,334 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 20px;
+}
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  color: #000;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.hero {
+  display: flex;
+  height: 80vh;
+  width: 100%;
+}
+
+.hero-block {
+  flex: 1;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero-block.male {
+  background-image: url('img/male.jpg'); /* картинка с мужчиной */
+}
+
+.hero-block.female {
+  background-image: url('img/female.jpg'); /* картинка с женщиной */
+}
+
+.hero-content {
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 30px;
+  border-radius: 8px;
+}
+
+.hero-content h2 {
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.hero-btn {
+  display: inline-block;
+  background-color: #000;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.hero-btn:hover {
+  background-color: #333;
+}
+
+/* Секции товаров */
+.product-section {
+  padding: 40px 20px;
+  background-color: #fff;
+}
+
+.section-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Сетка карточек */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 30px;
+  padding: 0 20px;
+}
+
+/* Карточка товара (как у тебя) */
+.product-card {
+  background-color: #fff;
+  text-align: center;
+  text-decoration: none;
+  border: 1px solid #eee;
+  transition: 0.3s ease;
+}
+
+.product-card:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-card img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.product-info {
+  padding: 10px;
+}
+
+.product-type {
+  color: #999;
+  font-size: 13px;
+  margin: 5px 0;
+}
+
+.product-name {
+  font-size: 16px;
+  margin: 5px 0;
+  color: #000;
+}
+
+.product-price {
+  font-weight: bold;
+  font-size: 15px;
+  color: #000;
+}
+.hero-full {
+  
+  height: 100vh;
+  background-image: url('/static/img/banner.jpg'); /* Заменить на твоё изображение */
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-overlay {
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 40px 60px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.hero-btn {
+  display: inline-block;
+  background-color: #000;
+  color: #fff;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.hero-btn:hover {
+  background-color: #333;
+}
+
+.comments-section {
+  margin-top: 60px;
+  background-color: #fff;
+  border: 1px solid #eee;
+  padding: 30px;
+  border-radius: 12px;
+}
+
+.comments-section h2 {
+  font-size: 22px;
+  margin-bottom: 20px;
+  color: #000;
+}
+
+.comment {
+  border-bottom: 1px solid #eee;
+  padding: 15px 0;
+}
+
+.comment:last-child {
+  border-bottom: none;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 5px;
+}
+
+.comment-body {
+  font-size: 16px;
+  color: #000;
+}
+
+.no-comments {
+  color: #888;
+  font-style: italic;
+  padding: 10px 0;
+}
+
+/* Форма */
+.comment-form {
+  margin-top: 40px;
+  padding: 30px;
+  background-color: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 12px;
+}
+
+.comment-form h3 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #000;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #fff;
+  color: #000;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #000;
+  outline: none;
+}
+
+.comment-form button.btn-buy {
+  margin-top: 10px;
+}
+.size-options {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.size-options input[type="radio"] {
+  display: none;
+}
+
+.size-options label {
+  padding: 10px 16px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.size-options input[type="radio"]:checked + label {
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+.size-options label:hover {
+  border-color: #000;
+}
+
+.quantity-wrapper {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quantity-label {
+  font-size: 14px;
+  color: #000;
+  min-width: 90px;
+}
+
+/* Стандартный input количества можно стилизовать так */
+input[type=number] {
+  width: 60px;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: "Segoe UI", sans-serif;
+  color: #000;
+  transition: border-color 0.3s ease;
+}
+
+input[type=number]:focus {
+  border-color: #000;
+  outline: none;
+}
+
+/* Кнопка в стиле твоего сайта */
+.btn-add-cart {
+  background-color: #000;
+  color: #fff;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+.btn-add-cart:hover {
+  background-color: #333;
 }

@@ -1,0 +1,52 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<!-- Большой баннер -->
+<section class="hero-full">
+  <div class="hero-overlay">
+    <h1 class="hero-title">Наша одежда</h1>
+    <a href="{% url 'products' %}" class="hero-btn">Перейти в каталог</a>
+  </div>
+</section>
+
+<!-- Популярные товары -->
+<section class="product-section">
+  <h2 class="section-title">Популярное</h2>
+  <div class="product-grid">
+    {% for product in products %}
+      <div class="product-card">
+        <a href="{{ product.get_absolute_url }}">
+          <img src="{{ product.image.url }}" alt="{{ product.title }}">
+          <div class="product-info">
+            <p class="product-type">{{ product.category }}</p>
+            <h3 class="product-name">{{ product.title }}</h3>
+            <p class="product-price">{{ product.price }} ₽</p>
+          </div>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- С высоким рейтингом -->
+<section class="product-section">
+  <h2 class="section-title">С высоким рейтингом</h2>
+  <div class="product-grid">
+    {% for product in products %}
+      <div class="product-card">
+        <a href="{{ product.get_absolute_url }}">
+          <img src="{{ product.image.url }}" alt="{{ product.title }}">
+          <div class="product-info">
+            <p class="product-type">{{ product.category }}</p>
+            <h3 class="product-name">{{ product.title }}</h3>
+            <p class="product-price">{{ product.price }} ₽</p>
+          </div>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% endblock %}

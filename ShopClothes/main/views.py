@@ -1,12 +1,16 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views.generic import DetailView,ListView,CreateView,UpdateView,DeleteView
 
+from .documents import ProductDocument
+
+from .forms import CommentForm
 from cart.forms import CartAddProductForm
 from .models import Product,Brand,Category
 from django.db.models import Max
 
 def home(request):
-    return render(request,'main/home.html')
+    products=Product.objects.order_by('-id')[:4]
+    return render(request,'main/home.html',{'products':products})
 
 
 
@@ -88,4 +92,29 @@ class ProductDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['cart_product_form'] = CartAddProductForm()
+        product = self.get_object()
+        context['comments'] = product.comments.filter(active=True).order_by('-created')[:3]  # первые 3 активных комментария
+        context['form'] = CommentForm()
         return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.product = self.object
+            comment.save()
+            return redirect(self.request.path)
+        context = self.get_context_data()
+        context['form'] = form
+        return self.render_to_response(context)
+
+
+def search_products(request):
+    q = request.GET.get('q')
+    products = []
+    if q:
+        search_results = ProductDocument.search().query("multi_match", query=q, fields=['title', 'description'],fuzziness="AUTO").execute()
+        ids = [hit.meta.id for hit in search_results.hits]
+        products = Product.objects.filter(id__in=ids)
+    return render(request, 'main/search_results.html', {'results': products, 'query': q})

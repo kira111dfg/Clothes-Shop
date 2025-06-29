@@ -38,11 +38,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_elasticsearch_dsl',
     'users',
     'main',
     'cart',
     'orders',
 ]
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'https://localhost:9200',
+        'http_auth': ('elastic', '+cj9Udw0qffTIm4dfBuW'),
+        'verify_certs': False  # отключает проверку самоподписанного сертификата
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -144,3 +153,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 CART_SESSION_ID = 'cart'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'kiravoropaeva6@gmail.com'
+EMAIL_HOST_PASSWORD = 'vxicvbqwahpbqvkx'  # app password без пробелов
+DEFAULT_FROM_EMAIL = 'kiravoropaeva6@gmail.com'

@@ -27,10 +27,15 @@
     {% endfor %}
   </div>
 
-  {{ cart_product_form.quantity }}
+  <div class="quantity-wrapper">
+    <label for="id_quantity" class="quantity-label">Количество:</label>
+    {{ cart_product_form.quantity }}
+  </div>
+  
   <input type="hidden" name="update" value="False">
-  <button type="submit">Добавить в корзину 🛒</button>
+  <button type="submit" class="btn-buy btn-add-cart">Добавить в корзину 🛒</button>
 </form>
+
 
 
     <div class="product-description">
@@ -39,4 +44,42 @@
     </div>
   </div>
 </div>
+<!-- Комментарии -->
+<div class="comments-section">
+  <h2>Отзывы о товаре</h2>
+
+  {% for comment in comments %}
+    <div class="comment">
+      <div class="comment-header">
+        <strong>{{ comment.name }}</strong>
+        <span class="comment-date">{{ comment.created|date:"d.m.Y H:i" }}</span>
+      </div>
+      <p class="comment-body">{{ comment.body }}</p>
+    </div>
+  {% empty %}
+    <p class="no-comments">Пока нет комментариев. Будьте первым!</p>
+  {% endfor %}
+</div>
+
+<!-- Форма добавления комментария -->
+<div class="comment-form">
+  <h3>Оставить отзыв</h3>
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      {{ form.name.label_tag }}  
+      {{ form.name }}
+    </div>
+    <div class="form-group">
+      {{ form.email.label_tag }}
+      {{ form.email }}
+    </div>
+    <div class="form-group">
+      {{ form.body.label_tag }}
+      {{ form.body }}
+    </div>
+    <button type="submit" class="btn-buy">Отправить</button>
+  </form>
+</div>
+
 {% endblock %}

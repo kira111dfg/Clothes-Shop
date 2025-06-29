@@ -36,6 +36,38 @@
       font-size: 1rem;
       transition: color 0.3s ease;
     }
+    .cart{
+  margin-left: 25px;
+}
+.search-form {
+  display: flex;
+  align-items: center;
+}
+
+.search-form input[type="text"] {
+  padding: 6px 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+  outline: none;
+  width: 200px;
+}
+
+.search-form button {
+  padding: 6px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-left: none;
+  background-color: #ff69b4; /* розовый */
+  color: white;
+  cursor: pointer;
+  border-radius: 0 4px 4px 0;
+  transition: background-color 0.3s ease;
+}
+
+.search-form button:hover {
+  background-color: #ff1493;
+}
 
     nav a:hover {
       color: #555;
@@ -61,21 +93,26 @@
 <body>
 
   <header>
-    <div class="logo">Angel</div>
+    <form method="get" action="{% url 'search_products' %}" class="search-form">
+  <input type="text" name="q" placeholder="Поиск продуктов..." value="{{ request.GET.q|default:'' }}" required>
+  <button type="submit">🔍</button>
+</form>
+
+    <a href="{%url 'home'%}"><div class="logo">Angel</div></a>
     <nav>
-      <a href="#about">Обо мне</a>
-      <a href="#portfolio">Работы</a>
-      <a href="#contact">Контакты</a>
+      <a href="{%url 'cart:cart_detail'%}">Корзина</a>
+      <a href="#">Войти</a>
+      <a href="#">Регистрация</a>
           <div class="cart">
     {% with total_items=cart|length %}
         {% if cart|length > 0 %}
-            Your cart:
+            Ваша корзина:
             <a href="{% url "cart:cart_detail" %}">
-                {{ total_items }} item{{ total_items|pluralize }},
+                {{ total_items }} вещей{{ total_items|pluralize }},
                 ${{ cart.get_total_price }}
             </a>
         {% else %}
-            Your cart is empty.
+            Ваша корзина пуста
         {% endif %}
     {% endwith %}
 </div>

@@ -4,6 +4,8 @@ footer {
   padding: 40px 60px;
   border-top: 1px solid #ddd;
   font-family: "Segoe UI", sans-serif;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .footer-row {

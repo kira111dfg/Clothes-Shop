@@ -1,20 +1,21 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
 
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link type="text/css" href="{% static 'css/base.css' %}" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+  <link rel="stylesheet" href="{% static 'css/footer.css' %}">
 
-   
-    <title>Document</title>
-    {% include "main\header.html" %}
-    {% block content %}{% endblock content %}
-    {% include "main\footer.html" %}
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.css" rel="stylesheet">
+</head>
 
-  </body>
+<body>
+  {% include "main/header.html" %}
+  {% block content %}{% endblock %}
+  {% include "main/footer.html" %}
+</body>
 </html>
