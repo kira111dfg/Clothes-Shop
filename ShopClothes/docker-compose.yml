@@ -1,0 +1,65 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - rabbitmq
+      - elasticsearch
+    environment:
+      - DB_NAME=ShopClothes
+      - DB_USER=kira
+      - DB_PASSWORD=kirakira900
+      - DB_HOST=db
+      - DB_PORT=5432
+      - CELERY_BROKER_URL=amqp://guest:guest@rabbitmq:5672//
+      - ELASTICSEARCH_HOST=http://elasticsearch:9200
+
+  db:
+    image: postgres:15
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_DB: ShopClothes
+      POSTGRES_USER: kira
+      POSTGRES_PASSWORD: kirakira900
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"  # Web-интерфейс RabbitMQ
+
+  celery:
+    build: .
+    command: celery -A myproject worker --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - rabbitmq
+      - db
+    environment:
+      - CELERY_BROKER_URL=amqp://guest:guest@rabbitmq:5672//
+      - DB_NAME=ShopClothes
+      - DB_USER=kira
+      - DB_PASSWORD=kirakira900
+      - DB_HOST=db
+      - DB_PORT=5432
+
+  elasticsearch:
+    image: elasticsearch:7.17.17
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+
+volumes:
+  postgres_data:

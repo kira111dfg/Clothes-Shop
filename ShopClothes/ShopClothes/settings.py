@@ -47,10 +47,8 @@ INSTALLED_APPS = [
 
 ELASTICSEARCH_DSL = {
     'default': {
-        'hosts': 'https://localhost:9200',
-        'http_auth': ('elastic', 'ITsxXVCCRV4gkCJEKKL*'),
-        'verify_certs': False  # отключает проверку самоподписанного сертификата
-    },
+        'hosts': os.getenv("ELASTICSEARCH_HOST", "http://localhost:9200")
+    }
 }
 
 MIDDLEWARE = [
@@ -104,6 +102,9 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
+
+# Celery
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
 
 
 # Password validation
