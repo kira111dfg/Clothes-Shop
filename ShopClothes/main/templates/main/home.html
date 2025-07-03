@@ -10,43 +10,71 @@
     <a href="{% url 'products' %}" class="hero-btn">Перейти в каталог</a>
   </div>
 </section>
-
-<!-- Популярные товары -->
-<section class="product-section">
-  <h2 class="section-title">Популярное</h2>
-  <div class="product-grid">
-    {% for product in products %}
-      <div class="product-card">
-        <a href="{{ product.get_absolute_url }}">
-          <img src="{{ product.image.url }}" alt="{{ product.title }}">
-          <div class="product-info">
-            <p class="product-type">{{ product.category }}</p>
-            <h3 class="product-name">{{ product.title }}</h3>
-            <p class="product-price">{{ product.price }} ₽</p>
-          </div>
-        </a>
-      </div>
+<!-- Популярные бренды -->
+ 
+<section class="brand-section">
+  <h2 class="section-title">Популярные бренды</h2>
+  <div class="brand-grid">
+    {% for brand in brands %}
+      <a href="{{ brand.get_absolute_url }}" class="brand-card">
+        <img src="{{ brand.image.url }}" alt="{{ brand.title }}">
+        <h3 class="brand-title">{{ brand.title }}</h3>
+      </a>
     {% endfor %}
   </div>
 </section>
 
-<!-- С высоким рейтингом -->
+<!-- Популярные товары -->
+
 <section class="product-section">
-  <h2 class="section-title">С высоким рейтингом</h2>
+  <h2 class="section-title">Популярное</h2>
+ <div class="catalog-container">
+
   <div class="product-grid">
     {% for product in products %}
+     {% if product.is_popular %}
       <div class="product-card">
         <a href="{{ product.get_absolute_url }}">
           <img src="{{ product.image.url }}" alt="{{ product.title }}">
-          <div class="product-info">
+          <div class="product-info-center">
             <p class="product-type">{{ product.category }}</p>
             <h3 class="product-name">{{ product.title }}</h3>
-            <p class="product-price">{{ product.price }} ₽</p>
+            <p class="product-price">{{ product.price }}₽</p>
           </div>
         </a>
       </div>
+      {% endif %}
     {% endfor %}
   </div>
+
+</div>
+</section>
+
+<!-- Актуальные товары -->
+<section class="product-section">
+  <h2 class="section-title">Сейчас в тренде</h2>
+<div class="catalog-container">
+
+  <div class="product-grid">
+    
+    {% for product in products %}
+    {% if not product.is_popular%}
+      <div class="product-card">
+        <a href="{{ product.get_absolute_url }}">
+          <img src="{{ product.image.url }}" alt="{{ product.title }}">
+          <div class="product-info-center">
+            <p class="product-type">{{ product.category }}</p>
+            <h3 class="product-name">{{ product.title }}</h3>
+            <p class="product-price">{{ product.price }}₽</p>
+          </div>
+        </a>
+      </div>
+          {% endif %}
+    {% endfor %}
+
+  </div>
+
+</div>
 </section>
 
 {% endblock %}

@@ -1,0 +1,48 @@
+
+{% extends 'main/base.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock head %}
+
+{% block content %}
+<div class="login-container">
+    <h2>Регистрация</h2>
+
+    {% if form.non_field_errors %}
+        <div class="form-error">
+            {% for error in form.non_field_errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        <input type="text" name="username" placeholder="Имя пользователя"  required>
+        {% if form.username.errors %}
+            <div class="field-error">{{ form.username.errors.0 }}</div>
+        {% endif %}
+
+        <input type="email" name="email" placeholder="Email"  required>
+        {% if form.email.errors %}
+            <div class="field-error">{{ form.email.errors.0 }}</div>
+        {% endif %}
+
+        <input type="password" name="password1" placeholder="Пароль" required>
+        {% if form.password1.errors %}
+            <div class="field-error">{{ form.password1.errors.0 }}</div>
+        {% endif %}
+
+        <input type="password" name="password2" placeholder="Подтвердите пароль" required>
+        {% if form.password2.errors %}
+            <div class="field-error">{{ form.password2.errors.0 }}</div>
+        {% endif %}
+
+        <button type="submit">Зарегистрироваться</button>
+    </form>
+
+    <p class="register-link">Уже есть аккаунт? <a href="{% url 'users:login' %}">Войти</a></p>
+</div>
+{% endblock %}

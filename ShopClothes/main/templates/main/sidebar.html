@@ -50,40 +50,42 @@
 <script src="https://cdn.jsdelivr.net/npm/wnumb@1.2.0/wNumb.min.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const priceSlider = document.getElementById('price-slider');
-    const inputMin = document.getElementById('input-price-min');
-    const inputMax = document.getElementById('input-price-max');
-    const priceDisplay = document.getElementById('price-display');
+  const priceSlider = document.getElementById('price-slider');
+  const inputMin = document.getElementById('input-price-min');
+  const inputMax = document.getElementById('input-price-max');
+  const priceDisplay = document.getElementById('price-display');
 
-    if (!priceSlider) return;
+  if (!priceSlider) return;
 
-    const startMin = parseInt(inputMin.value) || 0;
-    const startMax = parseInt(inputMax.value) || 100000;
+  // Убираем пробелы из значений перед парсингом в число
+  const startMin = parseInt(inputMin.value.replace(/\s/g, '')) || 0;
+  const startMax = parseInt(inputMax.value.replace(/\s/g, '')) || 100000;
 
-    noUiSlider.create(priceSlider, {
-      start: [startMin, startMax],
-      connect: true,
-      range: {
-        min: 0,
-        max: {{ max_price|default:"100000" }}
-      },
-      format: wNumb({
-        decimals: 0,
-        thousand: ' ',
-      }),
-      behaviour: 'tap-drag',
-    });
-
-    priceSlider.noUiSlider.on('update', function (values) {
-      const min = values[0];
-      const max = values[1];
-
-      inputMin.value = min;
-      inputMax.value = max;
-
-      priceDisplay.textContent = `от ${min} до ${max} ₽`;
-    });
+  noUiSlider.create(priceSlider, {
+    start: [startMin, startMax],
+    connect: true,
+    range: {
+      min: 0,
+      max: {{ max_price|default:"100000" }}
+    },
+    format: wNumb({
+      decimals: 0,
+      thousand: ' ',
+    }),
+    behaviour: 'tap-drag',
   });
+
+  priceSlider.noUiSlider.on('update', function (values) {
+    const min = values[0];
+    const max = values[1];
+
+    inputMin.value = min;
+    inputMax.value = max;
+
+    priceDisplay.textContent = `от ${min} до ${max} ₽`;
+  });
+});
+
 </script>
 <style>
 /* Чёрная тонкая линия слайдера */

@@ -1,23 +1,32 @@
 {% extends "main/base.html" %}
 {% block content %}
 <div class="catalog-container">
-{% include "main/sidebar.html" %}
-{% for product in products %}
-<div class="product-grid">
-  <div class="product-card">
-    <a href="{{product.get_absolute_url}}">
-      <img src="{{product.image.url}}" alt="{{product.title}}">
-      <div class="product-info">
-        <p class="product-type">{{product.category}}</p>
-        <h3 class="product-name">{{product.title}}</h3>
-        <p class="product-price">{{product.price}}</p>
-      </div>
-    </a>
-</div>
- 
-  </div>
-</div>
+  {% include "main/sidebar.html" %}
 
-{% endfor %}
+
+  <div class="product-grid">
+        {% if products %}
+    {% for product in products %}
+
+      <div class="product-card">
+        <a href="{{ product.get_absolute_url }}">
+          <img src="{{ product.image.url }}" alt="{{ product.title }}">
+          <div class="product-info-center">
+            <p class="product-type">{{ product.category }}</p>
+            <h3 class="product-name">{{ product.title }}</h3>
+            <p class="product-price">{{ product.price }}₽</p>
+          </div>
+        </a>
+      </div>
+    
+  </div>
+
 </div>
+  {% endfor %}
+{% else %}
+Нет товаров
+
+
+    {% endif %}
+
 {% endblock content %}

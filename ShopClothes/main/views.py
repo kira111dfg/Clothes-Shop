@@ -7,10 +7,15 @@ from .forms import CommentForm
 from cart.forms import CartAddProductForm
 from .models import Product,Brand,Category
 from django.db.models import Max
+from django.db.models import Case, When
+from .documents import ProductDocument
+from .models import Product
+from django.shortcuts import render
 
 def home(request):
-    products=Product.objects.order_by('-id')[:4]
-    return render(request,'main/home.html',{'products':products})
+    products=Product.objects.order_by('-id')[:6]
+    brands=Brand.objects.order_by('-id')[:5]
+    return render(request,'main/home.html',{'products':products,'brands':brands})
 
 
 
@@ -26,9 +31,9 @@ class ProductList(ListView):
         sizes = self.request.GET.getlist('size')
         brands = self.request.GET.getlist('brand')
         categories = self.request.GET.getlist('category')
-        price_min = self.request.GET.get('price_min')
-        price_max = self.request.GET.get('price_max')
-
+        price_min = self.request.GET.get('price_min', '').replace(' ', '')
+        price_max = self.request.GET.get('price_max', '').replace(' ', '')
+        
         if sizes:
             queryset = queryset.filter(size__in=sizes)
         if brands:
@@ -48,6 +53,8 @@ class ProductList(ListView):
         context['categories'] = Category.objects.all()
         context['sizes'] = Product.SIZE_CHOICES
 
+
+
         # остальные переменные
 
         # Передаем выбранные фильтры обратно в контекст для сохранения состояния чекбоксов
@@ -65,7 +72,7 @@ class ProductList(ListView):
 class CategoryView(ListView):
     model=Product
     template_name='main/category.html'
-    context_object_name='product'
+    context_object_name='products'
     category=None
 
     def get_queryset(self):
@@ -76,7 +83,7 @@ class CategoryView(ListView):
 class BrandView(ListView):
     model=Product
     template_name='main/brand.html'
-    context_object_name='product'
+    context_object_name='products'
     brand=None
 
     def get_queryset(self):
@@ -110,11 +117,16 @@ class ProductDetail(DetailView):
         return self.render_to_response(context)
 
 
+
 def search_products(request):
     q = request.GET.get('q')
     products = []
     if q:
-        search_results = ProductDocument.search().query("multi_match", query=q, fields=['title', 'description'],fuzziness="AUTO").execute()
-        ids = [hit.meta.id for hit in search_results.hits]
-        products = Product.objects.filter(id__in=ids)
+        search_results = ProductDocument.search()\
+            .query("multi_match", query=q, fields=['title', 'description', 'brand.title'], fuzziness="AUTO")\
+            .execute()
+        ids = [int(hit.meta.id) for hit in search_results.hits]
+        if ids:
+            preserved_order = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(ids)])
+            products = Product.objects.filter(id__in=ids).order_by(preserved_order)
     return render(request, 'main/search_results.html', {'results': products, 'query': q})

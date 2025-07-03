@@ -11,6 +11,25 @@
       background-color: #ffffff;
       color: #111;
     }
+ .logout-form {
+  display: inline;
+}
+
+.logout-form button {
+  background: none;
+  border: none;
+  color: #000;
+  font-size: 1rem;
+  margin-left: 25px;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0;
+  transition: color 0.3s ease;
+}
+
+.logout-form button:hover {
+  color: #555;
+}
 
     header {
       background-color: #fff;
@@ -39,85 +58,121 @@
     .cart{
   margin-left: 25px;
 }
-.search-form {
+header {
+  background-color: #fff;
+  color: #000;
+  padding: 20px 40px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.header-left,
+.header-right {
   display: flex;
   align-items: center;
 }
 
+.header-left {
+  gap: 40px;
+  flex: 1;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #000;
+  text-decoration: none;
+}
+
+nav a,
+.logout-form button {
+  text-decoration: none;
+  color: #000;
+  margin-left: 25px;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0;
+}
+
+nav a:hover,
+.logout-form button:hover {
+  color: #555;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
 .search-form input[type="text"] {
   padding: 6px 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px 0 0 4px;
+  font-size: 1rem;
+  border: none;
   outline: none;
   width: 200px;
 }
 
 .search-form button {
-  padding: 6px 12px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-left: none;
-  background-color: #ff69b4; /* розовый */
-  color: white;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  padding: 6px 10px;
   cursor: pointer;
-  border-radius: 0 4px 4px 0;
-  transition: background-color 0.3s ease;
+  color: #000;
+  transition: color 0.3s ease;
 }
 
 .search-form button:hover {
-  background-color: #ff1493;
+  color: #555;
 }
 
     nav a:hover {
       color: #555;
     }
 
-    @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      nav {
-        margin-top: 10px;
-      }
-
-      nav a {
-        margin-left: 0;
-        margin-right: 20px;
-      }
-    }
   </style>
 </head>
 <body>
 
-  <header>
-    <form method="get" action="{% url 'search_products' %}" class="search-form">
-  <input type="text" name="q" placeholder="Поиск продуктов..." value="{{ request.GET.q|default:'' }}" required>
-  <button type="submit">🔍</button>
-</form>
 
-    <a href="{%url 'home'%}"><div class="logo">Angel</div></a>
-    <nav>
-      <a href="{%url 'cart:cart_detail'%}">Корзина</a>
-      <a href="#">Войти</a>
-      <a href="#">Регистрация</a>
-          <div class="cart">
-    {% with total_items=cart|length %}
-        {% if cart|length > 0 %}
-            Ваша корзина:
-            <a href="{% url "cart:cart_detail" %}">
-                {{ total_items }} вещей{{ total_items|pluralize }},
-                ${{ cart.get_total_price }}
-            </a>
-        {% else %}
-            Ваша корзина пуста
-        {% endif %}
-    {% endwith %}
-</div>
-    </nav>
-  </header>
+<header>
+  <div class="header-left">
+    <a href="{% url 'home' %}" class="logo">Angel</a>
+
+    <form method="get" action="{% url 'search_products' %}" class="search-form">
+      <input type="text" name="q" placeholder="Поиск..." value="{{ request.GET.q|default:'' }}" required>
+      <button type="submit"></button>
+    </form>
+  </div>
+
+  <nav class="header-right">
+    <a href="{% url 'cart:cart_detail' %}">Корзина</a>
+
+    {% if user.is_authenticated %}
+    <form method="post" action="{% url 'users:logout' %}" class="logout-form">
+      {% csrf_token %}
+      <button type="submit">Выйти</button>
+    </form>
+    {% else %}
+    <a href="{% url 'users:login' %}">Войти</a>
+    <a href="{% url 'users:register' %}">Регистрация</a>
+    {% endif %}
+  </nav>
+</header>
+
+
 
 </body>
 </html>

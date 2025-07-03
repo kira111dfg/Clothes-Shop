@@ -1,0 +1,38 @@
+
+{% extends 'main/base.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock head %}
+
+{% block content %}
+<div class="login-container">
+    <h2>Вход</h2>
+
+    {% if form.non_field_errors %}
+        <div class="form-error">
+            {% for error in form.non_field_errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="post" action="{% url 'users:login' %}">
+        {% csrf_token %}
+
+        <input type="text" name="username" placeholder="Имя пользователя"  required>
+        {% if form.username.errors %}
+            <div class="field-error">{{ form.username.errors.0 }}</div>
+        {% endif %}
+
+        <input type="password" name="password" placeholder="Пароль" required>
+        {% if form.password.errors %}
+            <div class="field-error">{{ form.password.errors.0 }}</div>
+        {% endif %}
+
+        <button type="submit">Войти</button>
+    </form>
+
+    <p class="register-link">Нет аккаунта? <a href="{% url 'users:register' %}">Регистрация</a></p>
+</div>
+{% endblock %}

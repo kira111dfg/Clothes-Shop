@@ -48,7 +48,7 @@ INSTALLED_APPS = [
 ELASTICSEARCH_DSL = {
     'default': {
         'hosts': 'https://localhost:9200',
-        'http_auth': ('elastic', '+cj9Udw0qffTIm4dfBuW'),
+        'http_auth': ('elastic', 'ITsxXVCCRV4gkCJEKKL*'),
         'verify_certs': False  # отключает проверку самоподписанного сертификата
     },
 }
@@ -162,3 +162,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'kiravoropaeva6@gmail.com'
 EMAIL_HOST_PASSWORD = 'vxicvbqwahpbqvkx'  # app password без пробелов
 DEFAULT_FROM_EMAIL = 'kiravoropaeva6@gmail.com'
+
+LOGIN_URl='users:login'
+LOGIN_REDIRECT_URL='home'

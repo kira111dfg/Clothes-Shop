@@ -1,24 +1,30 @@
 {% extends "main/base.html" %}
 
-{% block title %}Checkout{% endblock %}
+{% block title %}Оформление заказа{% endblock %}
 
 {% block content %}
-    <h1>Оформление заказа</h1>
-    <div class="order-info">
-        <h3>Ваш заказ</h3>
-        <ul>
-            {% for item in cart %}
-                <li>
-                    {{ item.quantity }}x {{ item.product.name }}
-                    <span>${{ item.total_price }}</span>
-                </li>
-            {% endfor %}
-        </ul>
-        <p>Итого: ${{ cart.get_total_price }}</p>
+<div class="checkout-container">
+  <div class="checkout-card">
+    <h1 class="checkout-title">Оформление заказа</h1>
+
+    <div class="order-summary">
+      <h3>Ваш заказ:</h3>
+      <ul class="order-list">
+        {% for item in cart %}
+          <li class="order-item">
+            {{ item.quantity }} × {{ item.product.title}}
+            <span class="order-price">{{ item.total_price }}₽</span>
+          </li>
+        {% endfor %}
+      </ul>
+      <p class="order-total">Итого: <strong>{{ cart.get_total_price }}₽</strong></p>
     </div>
-    <form action="." method="post" class="order-form">
-        {{ form.as_p }}
-        <p><input type="submit" value="Заказать"></p>
-        {% csrf_token %}
+
+    <form action="." method="post" class="checkout-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn-submit">Оформить заказ</button>
     </form>
+  </div>
+</div>
 {% endblock %}

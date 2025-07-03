@@ -36,6 +36,7 @@ class Product(models.Model):
     slug=models.SlugField(blank=True,unique=True)
     category=models.ForeignKey('Category',on_delete=models.PROTECT)
     brand=models.ForeignKey('Brand',on_delete=models.PROTECT)
+    is_popular=models.BooleanField(default=False)
 
     def get_absolute_url(self):
         return reverse('product', args=[self.id])
